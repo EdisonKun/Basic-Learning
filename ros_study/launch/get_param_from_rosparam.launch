@@ -1,0 +1,6 @@
+<launch>
+  <param name="demon_param" type="int" value="666"/>
+  <param name="demon_param_2" type="double" value="22.2" />
+  <node name="get_param_from_rosparam" args="what1" pkg="ros_study" type="get_param_from_rosparam" output="screen" />
+  <node name="get_param_from_rosparam_2" args="what2" pkg="ros_study" type="get_param_from_rosparam" output="screen" />
+</launch>

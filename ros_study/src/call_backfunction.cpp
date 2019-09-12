@@ -7,7 +7,7 @@ rosrun rqt_graph rqt_graph查看订阅关系
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include <turtlesim/Pose.h>
-#include <turtle_actionlib/Velocity.h>
+//#include <turtle_actionlib/Velocity.h>
 
 std::string turtle_name;
 
@@ -39,6 +39,7 @@ int main(int argc, char** argv)
 //  ros::Subscriber sub = node.subscribe(turtle_name+"/pose", 10, &poseCallback);
   ros::Subscriber sub = node.subscribe(turtle_name+"/cmd_vel", 10, &vel_callback);
 
-  ros::spin();
+  std::cout << "time a" << std::endl;
+  ros::spin();//the call back function works here!!!!!
   return 0;
 };

@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ros_study)
+project(action_study)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  turtlesim
-  tf
+  actionlib_msgs
+  genmsg
+  actionlib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -61,17 +61,18 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
+ add_action_files( DIRECTORY action
+   FILES
+   Fibonacci.action
+   averaging.action
 #   Action2.action
-# )
+ )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   actionlib_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -103,10 +104,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES ros_study
-#  CATKIN_DEPENDS roscpp
-#  DEPENDS system_lib
+  INCLUDE_DIRS
+  LIBRARIES
+  CATKIN_DEPENDS actionlib_msgs genmsg
+  DEPENDS system_lib
 )
 
 ###########
@@ -122,7 +123,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/ros_study.cpp
+#   src/${PROJECT_NAME}/action_study.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -133,12 +134,37 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
- add_executable(get_param_from_rosparam src/get_param_from_rosparam.cpp)
- target_link_libraries(get_param_from_rosparam
-     ${catkin_LIBRARIES})
- add_executable(call_backfunction src/call_backfunction.cpp)
- target_link_libraries(call_backfunction
-     ${catkin_LIBRARIES})
+add_executable(fibonacci_server
+    src/fibonacci_server.cpp)
+
+target_link_libraries(
+  fibonacci_server
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(
+  fibonacci_server
+  ${action_study_EXPORTED_TARGETS}
+)
+
+add_executable(averaging_client src/averaging_client.cpp)
+target_link_libraries(averaging_client
+  ${catkin_LIBRARIES}
+)
+
+add_executable(averaging_server src/averaging_server.cpp)
+target_link_libraries(averaging_server
+  ${catkin_LIBRARIES}
+)
+
+
+add_executable(fibonacci_client src/fibonacci_client.cpp)
+target_link_libraries(fibonacci_client
+  ${catkin_LIBRARIES}
+)
+add_dependencies(fibonacci_client
+  ${action_study_EXPORTED_TARGETS}
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -202,7 +228,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros_study.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_action_study.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

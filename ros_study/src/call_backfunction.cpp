@@ -19,7 +19,7 @@ void poseCallback(const turtlesim::PoseConstPtr& msg){
   q.setRPY(0, 0, msg->theta);
   transform.setRotation(q);
   br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", turtle_name));
-  ROS_INFO_STREAM(turtle_name << "the turtle name is " << std::endl);
+//  ROS_INFO_STREAM(turtle_name << "the turtle name is " << std::endl);
 }
 
 void vel_callback(const geometry_msgs::TwistPtr& msg)
@@ -36,8 +36,8 @@ int main(int argc, char** argv)
   ROS_INFO_STREAM(turtle_name << "the turtle name is " << std::endl);
 
   ros::NodeHandle node;
-//  ros::Subscriber sub = node.subscribe(turtle_name+"/pose", 10, &poseCallback);
-  ros::Subscriber sub = node.subscribe(turtle_name+"/cmd_vel", 10, &vel_callback);
+  ros::Subscriber sub = node.subscribe(turtle_name+"/pose", 10, &poseCallback);//keytelecontrol feedback, the turtle return the /turtle_name/pose
+//  ros::Subscriber sub = node.subscribe(turtle_name+"/cmd_vel", 10, &vel_callback);
 
   std::cout << "time a" << std::endl;
   ros::spin();//the call back function works here!!!!!

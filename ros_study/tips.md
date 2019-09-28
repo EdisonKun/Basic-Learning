@@ -17,3 +17,7 @@ git push -u origin master
 https://www.cnblogs.com/liu-fa/p/5925381.html
 ###5 action_name
 https://docs.ros.org/api/actionlib/html/classactionlib_1_1SimpleActionClient.html#details
+
+##2、tf
+在加载urdf时，各个关节的tf自动加载吗？
+可以测试一下，rviz

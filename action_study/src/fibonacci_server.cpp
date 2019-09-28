@@ -55,7 +55,7 @@ void executeCB(const actionlib_tutorials::FibonacciGoalConstPtr &goal)
             break;
         }
         feedback_.sequence.push_back(feedback_.sequence[i] + feedback_.sequence[i-1]);
-        // publish the feedback
+        // publish the feedback for a given goal
         as_.publishFeedback(feedback_);
         // this sleep is not necessary, the sequence is computed at 1 Hz for demonstration purposes
         r.sleep();

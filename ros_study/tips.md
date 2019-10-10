@@ -21,3 +21,4 @@ https://docs.ros.org/api/actionlib/html/classactionlib_1_1SimpleActionClient.htm
 ##2、tf
 在加载urdf时，各个关节的tf自动加载吗？
 可以测试一下，rviz
+Nope, robot_state_publisher

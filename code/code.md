@@ -158,3 +158,22 @@ cartisian:笛卡尔空间计算， endeffector的target或者trajectory
 legmode：腿的模型，可以进行强制切换,支撑腿或者摆动腿；
 
 ###myaction的yaml文件
+
+###ros_ethercat_driver
+1、ec_slavecount如何扫描读取？
+2、为什么motor_friction_mu是3？
+3、switch ((driver_feedback->state<<28)>>28) {//why?
+  driver_feedback->status_word & 0b01101111
+4、<font color=#FF0080 > *void RobotStateEtherCATHardwareInterface::read(const ros::Time& time, const ros::Duration& period)*</font>中如何读取数据，那个exchage4bytes_是做什么的？
+5、<font color=#00800 > joint_control_methods如何定义？</font>
+函数<font color=#FF0088 >*bool  RobotStateEtherCATHardwareInterface::setControlMethod(const std::string& method)*</font> )中可以进行设置；
+
+###hardwareinterface
+1、gazebo_state_hardware_interface中虽然有joint_effort_interface_,joint_position_interface，但是其下面都是空，为什么要这样操作呢？定义一个不就可以了吗？
+不然，首先
+```
+joint_handle = hardware_interface::JointHandle(js_interface_.getHandle(joint_names_[j]),
+                                                     &joint_effort_command_[j]);
+robot_state_interface_.joint_effort_interfaces_.registerHandle(joint_handle);
+```
+中注册了handle，因此可以使用setcommand（）将命令值直接赋值到对应的command，比如joint_effort_command;然后在后续调用的时候writesim()，比如关节处于不同的工作模式的时候可以直接实现调用相应的命令。（当然个人认为有一个interface和command类型也是可以的，但是需要额外判断工作类型，然后修改命令处理方法）

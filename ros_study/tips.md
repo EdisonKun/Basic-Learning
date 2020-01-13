@@ -31,3 +31,22 @@ Nope, robot_state_publisher
 
 ##8、realtime——tools
 https://design.ros2.org/articles/realtime_background.html
+
+##9、包安裝失敗：
+https://www.codelast.com/%E5%8E%9F%E5%88%9B-%E8%A7%A3%E5%86%B3ubuntu-%E6%97%A0%E6%B3%95%E7%94%A8-apt-get-install-%E5%AE%89%E8%A3%85%E4%BB%BB%E4%BD%95%E8%BD%AF%E4%BB%B6dpkg-error-processing-package-xxx%E7%9A%84%E9%97%AE/
+
+##10、关于control tolbox库安装失败
+首先按照教程下载control toolbox，此时可以进行编译；
+然后进行手动安装cppad和cppad，成功编译ex_LQR
+![](assets/tips-1ee8d8d2.png)
+但是几乎相同的代码，却并没有编译成功：
+![](assets/tips-f4e327f1.png)
+我在点击ct/optcon/optcon.h， 然后点击#ct/core/core.h时发现cppad和cppadcg是灰色的，这个不是很正常
+![](assets/tips-f91bd832.png)    
+    所以猜想是不是cppad和cppadcg的问题？（或许在执行的时候，cppad和cppadcg安装有先后顺序）而且在执行    
+```
+./build_ct.sh -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=true
+```    
+![](assets/tips-466f799d.png)
+好像也是cppad的问题，而cppad的安装是按照指定教程进行安装的。其版本是20190200.4，而且我有安装llvm_version=6.0
+我的gcc版本是5.4.0。如果你需要任何安装信息，请直接联系我。
